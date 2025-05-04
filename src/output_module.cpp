@@ -16,7 +16,7 @@ OutputModule::~OutputModule() {
 }
 
 void OutputModule::start() {
-    PaError err = Pa_OpenDefaultStream(&output_stream_, 0, CHANNELS, paFloat32, SAMPLE_RATE, FRAME_SIZE,
+    PaError err = Pa_OpenDefaultStream(&output_stream_, 0, AudioConfig::CHANNELS, paFloat32, AudioConfig::SAMPLE_RATE, FRAME_SIZE,
                                        outputCallback, this);
     if (err != paNoError) {
         throw std::runtime_error("Failed to open output stream: " + std::string(Pa_GetErrorText(err)));
@@ -44,11 +44,11 @@ int OutputModule::outputCallback(const void* input, void* output, unsigned long 
 
     AudioBuffer local_data;
     if (module->local_buffer_.pop(local_data)) {
-        for (size_t i = 0; i < local_data.size && i < frameCount * CHANNELS; ++i) {
+        for (size_t i = 0; i < local_data.size && i < frameCount * AudioConfig::CHANNELS; ++i) {
             out[i] = local_data.data[i];
         }
     } else {
-        std::fill(out, out + frameCount * CHANNELS, 0.0f);
+        std::fill(out, out + frameCount * AudioConfig::CHANNELS, 0.0f);
     }
 
     AudioBuffer meets_data;

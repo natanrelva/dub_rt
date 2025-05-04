@@ -1,4 +1,3 @@
-// include/ipc_manager.h
 #ifndef IPC_MANAGER_H
 #define IPC_MANAGER_H
 
@@ -6,11 +5,12 @@
 #include <mutex>
 #include <vector>
 
+// Definição única de AudioBuffer para todo o projeto
 struct AudioBuffer {
     std::vector<float> data;
     size_t size;
     double timestamp;
-    float speed_factor = 1.0f; // Adicionado para armazenar o fator de velocidade
+    float speed_factor = 1.0f;
 };
 
 class IPCManager {

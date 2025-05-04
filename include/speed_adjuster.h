@@ -1,10 +1,10 @@
-// include/speed_adjuster.h
 #ifndef SPEED_ADJUSTER_H
 #define SPEED_ADJUSTER_H
 
-#include "ipc_manager.h"
-#include "buffer_manager.h" // Adicionado para SAMPLE_RATE e CHANNELS
-#include <SoundTouch.h>
+#include "ipc_manager.h"   // para AudioBuffer
+#include "audio_config.h"  // para constantes de áudio
+#include <soundtouch/SoundTouch.h>
+#include <vector>
 
 class SpeedAdjuster {
 private:

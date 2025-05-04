@@ -2,27 +2,21 @@
 #define BUFFER_MANAGER_H
 
 #include "ipc_manager.h"
-
-#define SAMPLE_RATE (48000) // Taxa de amostragem padrão (48 kHz)
-#define CHANNELS (2)        // Número de canais (estéreo)
+#include "audio_config.h"
 
 class BufferManager {
-private:
-    IPCManager& ipc_;       // Referência ao gerenciador de IPC
-    double buffer_ms_;      // Tamanho do buffer em milissegundos
-
 public:
-    // Construtor que inicializa o BufferManager com um IPCManager
-    BufferManager(IPCManager& ipc);
+    // Construtor precisa ser declarado aqui
+    explicit BufferManager(IPCManager& ipc);
 
-    // Adiciona um buffer ao IPCManager e atualiza o tamanho do buffer em ms
     void push(const AudioBuffer& buffer);
-
-    // Remove um buffer do IPCManager e atualiza o tamanho do buffer em ms
     bool pop(AudioBuffer& buffer);
 
-    // Retorna o tamanho atual do buffer em milissegundos
-    double getBufferMs() const;
+    double getBufferMs() const noexcept;
+
+private:
+    IPCManager& ipc_;
+    double buffer_ms_ = 0.0;
 };
 
 #endif // BUFFER_MANAGER_H

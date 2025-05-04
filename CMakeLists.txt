@@ -47,6 +47,8 @@ add_library(audio_manipulation
     src/output_module.cpp
 )
 
+add_executable(audio_app src/main.cpp)
+
 # Executável de teste
 add_executable(test_audio_manipulation
     tests/test_decoder.cpp
@@ -54,6 +56,15 @@ add_executable(test_audio_manipulation
     tests/test_capture_module.cpp
     tests/test_output_module.cpp
     tests/test_integration_level2.cpp
+)
+
+# Linkar com bibliotecas
+target_link_libraries(audio_app
+    audio_manipulation
+    ${PORTAUDIO_LIBRARIES}
+    ${OPUS_LIBRARIES}
+    ${SOUNDTOUCH_LIBRARIES} 
+    pthread
 )
 
 # Linkar com bibliotecas

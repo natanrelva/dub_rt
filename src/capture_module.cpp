@@ -1,8 +1,12 @@
 #include "capture_module.h"
 #include <stdexcept>
+#include <iostream>
+
+using namespace AudioConfig;
 
 CaptureModule::CaptureModule(BufferManager& mic_buffer, BufferManager& loopback_buffer)
-    : mic_buffer_(mic_buffer), loopback_buffer_(loopback_buffer), mic_stream_(nullptr), loopback_stream_(nullptr) {
+    : mic_buffer_(mic_buffer), loopback_buffer_(loopback_buffer),
+      mic_stream_(nullptr), loopback_stream_(nullptr) {
     Pa_Initialize();
 }
 
@@ -14,15 +18,13 @@ CaptureModule::~CaptureModule() {
 void CaptureModule::start() {
     PaError err;
 
-    // Abrir stream do microfone
-    err = Pa_OpenDefaultStream(&mic_stream_, CHANNELS, 0, paFloat32, SAMPLE_RATE, FRAME_SIZE,
+    err = Pa_OpenDefaultStream(&mic_stream_, CHANNELS, 0, paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER,
                                micCallback, &mic_buffer_);
     if (err != paNoError) {
         throw std::runtime_error("Failed to open mic stream: " + std::string(Pa_GetErrorText(err)));
     }
 
-    // Abrir stream de loopback (simulado; depende do SO)
-    err = Pa_OpenDefaultStream(&loopback_stream_, CHANNELS, 0, paFloat32, SAMPLE_RATE, FRAME_SIZE,
+    err = Pa_OpenDefaultStream(&loopback_stream_, CHANNELS, 0, paFloat32, SAMPLE_RATE, FRAMES_PER_BUFFER,
                                loopbackCallback, &loopback_buffer_);
     if (err != paNoError) {
         throw std::runtime_error("Failed to open loopback stream: " + std::string(Pa_GetErrorText(err)));
@@ -52,9 +54,9 @@ void CaptureModule::stop() {
     }
 }
 
-int CaptureModule::micCallback(const void* input, void* output, unsigned long frameCount,
+int CaptureModule::micCallback(const void* input, void* /*output*/, unsigned long frameCount,
                                const PaStreamCallbackTimeInfo* timeInfo,
-                               PaStreamCallbackFlags statusFlags, void* userData) {
+                               PaStreamCallbackFlags /*statusFlags*/, void* userData) {
     BufferManager* buffer = static_cast<BufferManager*>(userData);
     const float* in = static_cast<const float*>(input);
 
@@ -67,9 +69,9 @@ int CaptureModule::micCallback(const void* input, void* output, unsigned long fr
     return paContinue;
 }
 
-int CaptureModule::loopbackCallback(const void* input, void* output, unsigned long frameCount,
+int CaptureModule::loopbackCallback(const void* input, void* /*output*/, unsigned long frameCount,
                                     const PaStreamCallbackTimeInfo* timeInfo,
-                                    PaStreamCallbackFlags statusFlags, void* userData) {
+                                    PaStreamCallbackFlags /*statusFlags*/, void* userData) {
     BufferManager* buffer = static_cast<BufferManager*>(userData);
     const float* in = static_cast<const float*>(input);
 

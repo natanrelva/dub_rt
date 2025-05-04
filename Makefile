@@ -185,6 +185,19 @@ audio_manipulation/fast:
 .PHONY : audio_manipulation/fast
 
 #=============================================================================
+# Target rules for targets named audio_app
+
+# Build rule for target.
+audio_app: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 audio_app
+.PHONY : audio_app
+
+# fast build rule for target.
+audio_app/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_app.dir/build.make CMakeFiles/audio_app.dir/build
+.PHONY : audio_app/fast
+
+#=============================================================================
 # Target rules for targets named test_audio_manipulation
 
 # Build rule for target.
@@ -368,6 +381,30 @@ src/ipc_manager.s: src/ipc_manager.cpp.s
 src/ipc_manager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_manipulation.dir/build.make CMakeFiles/audio_manipulation.dir/src/ipc_manager.cpp.s
 .PHONY : src/ipc_manager.cpp.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_app.dir/build.make CMakeFiles/audio_app.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_app.dir/build.make CMakeFiles/audio_app.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/audio_app.dir/build.make CMakeFiles/audio_app.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 src/output_module.o: src/output_module.cpp.o
 .PHONY : src/output_module.o
@@ -574,6 +611,7 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... audio_app"
 	@echo "... audio_manipulation"
 	@echo "... gmock"
 	@echo "... gmock_main"
@@ -595,6 +633,9 @@ help:
 	@echo "... src/ipc_manager.o"
 	@echo "... src/ipc_manager.i"
 	@echo "... src/ipc_manager.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 	@echo "... src/output_module.o"
 	@echo "... src/output_module.i"
 	@echo "... src/output_module.s"
