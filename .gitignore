@@ -1,0 +1,42 @@
+
+### **.gitignore**
+
+Aqui está o conteúdo do arquivo `.gitignore` para garantir que arquivos desnecessários não sejam comitados no repositório.
+
+```gitignore
+# Ignorar arquivos de build do CMake
+/build/
+
+# Ignorar arquivos do Docker
+*.log
+*.tar
+*.gz
+*.dmg
+*.sh
+
+# Ignorar arquivos temporários de compilação
+*.o
+*.obj
+*.so
+*.exe
+
+# Ignorar arquivos de testes compilados
+/test_runner
+*.gcda
+*.gcno
+*.gcov
+
+# Ignorar arquivos de configuração do sistema
+*.swp
+*.swo
+
+# Ignorar arquivos de dependências do CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+
+# Ignorar arquivos de configurações pessoais
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
